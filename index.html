@@ -2,28 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ring</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com"> 
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <title>RING</title>
 </head>
-<style>
-    button{
-        font-family: 'Poppins', sans-serif; 
-        width: 50%; 
-        height: 50%; 
-        font-size: 55px; 
-        background-color: lightcyan;
-        user-select: none;
-        border-radius: 15px;
-    }
-    button:hover{
-        background-color: darkseagreen;
-    }
-    </style>
-<body style="display: flex; justify-content: center; align-items: center; height: 100vh;  overflow: hidden;">
-    <audio id="sound1" src="audio1.wav" preload="auto" style="display: none;"></audio>
-  <button onclick="document.getElementById('sound1').play();">RING</button>
+<body>
+    <style>
+        button{
+            font-family: 'Poppins', sans-serif; 
+            width: 50%; 
+            height: 50%; 
+            font-size: 55px; 
+            background-color: azure;
+            user-select: none;
+            border-radius: 15px;
+            transition: 0.3s;
+        }
+        </style>
+        <body style="display: flex; justify-content: center; align-items: center; height: 100vh;  overflow: hidden;">
+            <img src="frame.png" alt="frame" style="position: absolute; width: 20px; height: 20px; top: 0; right: 0; transition: 0.3s;" onclick="large()" id="img">
+            <p style="position: absolute; top: 70px; font-size: 30px; font-family: 'Poppins', sans-serif;">Ieva Kasparavičiūtė</p>
+            <p style="position: absolute; top: 120px; font-size: 25px; font-family: 'Poppins', sans-serif;">IK003</p>
+        <audio id="sound1" src="audio1.wav" preload="auto" style="display: none;"></audio>
+        <button onclick="ring()" id="button">RING</button>
+        <script>
+            function large() {
+                document.getElementById("img").style.width = "99%";
+                document.getElementById("img").style.height = "auto";
+                document.getElementById("img").style.top = "25%";
+                document.getElementById("img").style.border = "2px solid black";
+                setTimeout(() => {document.getElementById("img").style.width = "20px";}, 3000);
+                setTimeout(() => {document.getElementById("img").style.height = "20px";}, 3000);
+                setTimeout(() => {document.getElementById("img").style.top = "0";}, 3000);
+                setTimeout(() => {document.getElementById("img").style.border = "none";}, 3000);
+            }
+            function ring() {
+                document.getElementById('sound1').play();
+                document.getElementById("button").style.backgroundColor = "darkseagreen";
+                setTimeout(() => {document.getElementById("button").style.backgroundColor = "azure";}, 10000);
+            }
+        </script>
 </body>
 </html>
