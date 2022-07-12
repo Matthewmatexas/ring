@@ -16,33 +16,76 @@
             width: 50%; 
             height: 50%; 
             font-size: 55px; 
-            background-color: azure;
+            background-color: darkgrey;
             user-select: none;
             border-radius: 15px;
             transition: 0.3s;
+            opacity: 0.1;
+            pointer-events: none;
+            border: none;
         }
         </style>
         <body style="display: flex; justify-content: center; align-items: center; height: 100vh;  overflow: hidden;">
             <img src="frame.png" alt="frame" style="position: absolute; z-index: 5; width: 20px; height: 20px; top: 0; right: 0; transition: 0.3s;" onclick="large()" id="img">
+            <img src="download.png" alt="frame" style="position: absolute; opacity: 0; z-index: 5; width: 20px; height: 20px; top: 0; left: 0; transition: 0.3s;" onclick="leave()" id="img2">
             <p style="position: absolute; top: 30px; font-size: 30px; font-family: 'Poppins', sans-serif;">Ieva Kasparavičiūtė</p>
             <p style="position: absolute; top: 70px; font-size: 25px; font-family: 'Poppins', sans-serif;">IK003</p>
+            <p style="position: absolute; bottom: 30px; font-size: 20px; color: white; background-color: red; border-radius: 15px; padding: 15px; padding-top: 5px; padding-bottom: 5px; font-family: 'Poppins', sans-serif; transition: 0.3s;" id="isejusi">Darbuotojo nėra.</p>
+            <p style="position: absolute; bottom: 30px; font-size: 20px; color: white; opacity: 0; background-color: darkgrey; border-radius: 15px; padding: 15px; padding-top: 5px; padding-bottom: 5px; font-family: 'Poppins', sans-serif; transition: 0.3s;" id="registruojasi">Darbuotojas registruojasi...</p>
+            <p style="position: absolute; bottom: 30px; font-size: 20px; color: white; opacity: 0; background-color: darkseagreen; border-radius: 15px; padding: 15px; padding-top: 5px; padding-bottom: 5px; font-family: 'Poppins', sans-serif; transition: 0.3s;" id="yra">Darbuotojas yra.</p>
+            <p style="position: absolute; bottom: 30px; font-size: 20px; color: black; border: 2px solid darkgrey; opacity: 0; background-color: azure; border-radius: 15px; padding: 15px; padding-top: 5px; padding-bottom: 5px; font-family: 'Poppins', sans-serif; transition: 0.3s;" id="ringing">Skambinama...</p>
         <audio id="sound1" src="audio1.wav" preload="auto" style="display: none;"></audio>
         <button onclick="ring()" id="button">RING</button>
         <script>
             function large() {
-                document.getElementById("img").style.width = "99%";
+                document.getElementById("img").style.width = "95%";
+                document.getElementById("img").style.right = "2.5%";
                 document.getElementById("img").style.height = "auto";
                 document.getElementById("img").style.top = "25%";
-                document.getElementById("img").style.border = "2px solid black";
-                setTimeout(() => {document.getElementById("img").style.width = "20px";}, 3000);
-                setTimeout(() => {document.getElementById("img").style.height = "20px";}, 3000);
-                setTimeout(() => {document.getElementById("img").style.top = "0";}, 3000);
-                setTimeout(() => {document.getElementById("img").style.border = "none";}, 3000);
+                document.getElementById("img").style.boxShadow = "0 0 150px darkgrey";
+                document.getElementById("isejusi").style.opacity = "0";
+                document.getElementById("registruojasi").style.opacity = "1";
+                document.getElementById("button").style.opacity = "0";
+                setTimeout(() => {document.getElementById("img").style.width = "20px";}, 10000);
+                setTimeout(() => {document.getElementById("img").style.height = "20px";}, 10000);
+                setTimeout(() => {document.getElementById("img").style.top = "0";}, 10000);
+                setTimeout(() => {document.getElementById("img").style.border = "none";}, 10000);
+                setTimeout(() => {document.getElementById("img").style.right = "0";}, 10000);
+                setTimeout(() => {document.getElementById("img").style.boxShadow = "none";}, 10000);
+                setTimeout(() => {document.getElementById("img2").style.opacity = "1";}, 10300);
+                setTimeout(() => {document.getElementById("img").style.opacity = "0";}, 10300);
+                setTimeout(() => {document.getElementById("button").style.opacity = "1";}, 10300);
+                setTimeout(() => {document.getElementById("button").style.backgroundColor = "darkseagreen";}, 10300);
+                setTimeout(() => {document.getElementById("button").style.color = "white";}, 10300);
+                setTimeout(() => {document.getElementById("button").style.pointerEvents = "all";}, 10300);
+                setTimeout(() => {document.getElementById("yra").style.opacity = "1";}, 10300);
+                setTimeout(() => {document.getElementById("registruojasi").style.opacity = "0";}, 10300);
             }
             function ring() {
                 document.getElementById('sound1').play();
-                document.getElementById("button").style.backgroundColor = "darkseagreen";
-                setTimeout(() => {document.getElementById("button").style.backgroundColor = "azure";}, 10000);
+                document.getElementById("button").style.backgroundColor = "azure";
+                document.getElementById("button").style.pointerEvents = "none";
+                document.getElementById("button").style.color = "black";
+                document.getElementById("button").style.border = "2px solid darkgrey";
+                document.getElementById("img2").style.opacity = "0";
+                document.getElementById("ringing").style.opacity = "1";
+                document.getElementById("yra").style.opacity = "0";
+                setTimeout(() => {document.getElementById("img2").style.opacity = "1";}, 10000);
+                setTimeout(() => {document.getElementById("button").style.backgroundColor = "darkseagreen";}, 10000);
+                setTimeout(() => {document.getElementById("button").style.color = "white";}, 10000);
+                setTimeout(() => {document.getElementById("ringing").style.opacity = "0";}, 10000);
+                setTimeout(() => {document.getElementById("yra").style.opacity = "1";}, 10000);
+                setTimeout(() => {document.getElementById("button").style.border = "none";}, 10000);
+                setTimeout(() => {document.getElementById("button").style.pointerEvents = "all";}, 10000);
+            }
+            function leave() {
+                document.getElementById('button').style.backgroundColor = "darkgrey";
+                document.getElementById("button").style.opacity = "0.1";
+                document.getElementById("button").style.pointerEvents = "none";
+                document.getElementById("img2").style.opacity = "0";
+                document.getElementById("img").style.opacity = "1";
+                document.getElementById("isejusi").style.opacity = "1";
+                document.getElementById("yra").style.opacity = "0";
             }
         </script>
 </body>
