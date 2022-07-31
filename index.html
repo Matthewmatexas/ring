@@ -7,85 +7,291 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <title>RING</title>
+    <title>moon_astec work</title>
 </head>
-<body>
+<body style="display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; background-color: azure;">
     <style>
-        button{
-            font-family: 'Poppins', sans-serif; 
-            width: 50%; 
-            height: 50%; 
-            font-size: 55px; 
-            background-color: darkgrey;
+        *{
             user-select: none;
-            border-radius: 15px;
+        }
+        #btn{
+            width: 200px;
+            height: 400px;
+            font-family: 'Poppins', sans-serif;
+            border-radius: 25px;
+            font-size: 50px;
+            border: 5px solid black;
+            background-color: azure;
+            color: black;
             transition: 0.3s;
             opacity: 0.1;
             pointer-events: none;
-            border: none;
+        }
+        h1{
+            font-family: 'Poppins', sans-serif;
+            position: fixed;
+            top: 120px;
+            opacity: 0;
+            transition: 0.3s;
+        }
+        .status{
+            width: 200px;
+            height: 30px;
+            position: fixed;
+            border-radius: 25px;
+            bottom: 25px;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.3s;
+        }
+        #status1{
+            border: 5px solid red;
+            color: white;
+            background-color: red;
+        }
+        #status2{
+            border: 5px solid darkgrey;
+            color: white;
+            background-color: darkgrey;
+            opacity: 0;
+        }
+        #status3{
+            border: 5px solid darkseagreen;
+            color: white;
+            background-color: darkseagreen;
+            opacity: 0;
+        }
+        #status4{
+            border: 5px solid lightgrey;
+            color: lightgrey;
+            background-color: darkgrey;
+            opacity: 0;
+        }
+        img{
+            width: 100px;
+            height: 100px;
+            position: fixed;
+            top: 25px;
+            transition: 0.3s;
+            z-index: 5;
+        }
+        video{
+            width: 100px;
+            height: 100px;
+            position: fixed;
+            top: 24.5px;
+            transition: 0.3s;
+            display: none;
+            margin-left: -1.9px;
+        }
+        #divas{
+            width: 90%;
+            height: 250px;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            position: fixed;
+            top: -350px;
+            right: -95%;
+            background-color: azure;
+            border: 2px solid darkgrey;
+            font-size: 20px;
+            transition: 0.3s;
+            box-shadow: 0 0 25px darkgrey;
+            border-radius: 25px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-direction: column;
+            color: darkgrey;
+            z-index: 10;
+        }
+        input{
+            width: 90%;
+            height: 50px;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            background-color: azure;
+            border: 2px solid darkgrey;
+            font-size: 25px;
+            transition: 0.3s;
+            border-radius: 25px;
+            color: darkgrey;
+        }
+        input::placeholder{
+            color: darkgrey;
+        }
+        input:focus{
+            outline: none;
+        }
+        #divas button{
+            font-size: 20px;
+            border-radius: 25px;
+            width: 150px;
+            height: 35px;
+            border: 2px solid darkgrey;
+            color: darkgrey;
+            font-family: 'Poppins', sans-serif;
+            background-color: azure;
+            transition: 0.3s;
+        }
+        @keyframes spin{
+            0%{
+                transform: rotate(-360deg);
+            }
+            100%{
+            }
         }
         </style>
-        <body style="display: flex; justify-content: center; align-items: center; height: 100vh;  overflow: hidden;">
-            <img src="frame.png" alt="frame" style="position: absolute; z-index: 5; width: 20px; height: 20px; top: 0; right: 0; transition: 0.3s;" onclick="large()" id="img">
-            <img src="download.png" alt="frame" style="position: absolute; opacity: 0; z-index: 5; width: 20px; height: 20px; top: 0; left: 0; transition: 0.3s;" onclick="leave()" id="img2">
-            <p style="position: absolute; top: 30px; font-size: 30px; font-family: 'Poppins', sans-serif;">Ieva Kasparavičiūtė</p>
-            <p style="position: absolute; top: 70px; font-size: 25px; font-family: 'Poppins', sans-serif;">IK003</p>
-            <p style="position: fixed; bottom: 30px; font-size: 20px; color: white; background-color: red; border-radius: 15px; padding: 15px; padding-top: 5px; padding-bottom: 5px; font-family: 'Poppins', sans-serif; transition: 0.3s;" id="isejusi">Darbuotojo nėra.</p>
-            <p style="position: fixed; bottom: 30px; font-size: 20px; color: white; opacity: 0; background-color: darkgrey; border-radius: 15px; padding: 15px; padding-top: 5px; padding-bottom: 5px; font-family: 'Poppins', sans-serif; transition: 0.3s;" id="registruojasi">Darbuotojas registruojasi...</p>
-            <p style="position: fixed; bottom: 30px; font-size: 20px; color: white; opacity: 0; background-color: darkseagreen; border-radius: 15px; padding: 15px; padding-top: 5px; padding-bottom: 5px; font-family: 'Poppins', sans-serif; transition: 0.3s;" id="yra">Darbuotojas yra.</p>
-            <p style="position: fixed; bottom: 30px; font-size: 20px; color: black; border: 2px solid darkgrey; opacity: 0; background-color: azure; border-radius: 15px; padding: 15px; padding-top: 5px; padding-bottom: 5px; font-family: 'Poppins', sans-serif; transition: 0.3s;" id="ringing">Skambinama...</p>
-        <audio id="sound1" src="audio1.wav" preload="auto" style="display: none;"></audio>
-        <button onclick="ring()" id="button">RING</button>
+            <audio id="sound1" src="audio1.wav"></audio>
+            <audio id="incoming" src="incoming-ring.mp3"></audio>
+            <audio id="occupied" src="occupied.mp3"></audio>
+            <audio id="empty" src="empty.mp3"></audio>
+            <audio id="register" src="register.mp3"></audio>
+            <img src="logo.jpg" alt="logo" id="img">
+            <video src="video.mp4" id="vid"></video>
+            <div style="width: 100%; height: 50px; top: -80px; position: fixed; left: 0; right: 0; border-radius: 0 0 25px 25px; font-family: 'Poppins', sans-serif; background-color: azure; box-shadow: 0 0 25px darkgrey; display: flex; justify-content: center; align-items: center; transition: 0.3s; z-index: 5;" id="success"><p>office changed to occupied succesfully.</p></div>
+            <div style="width: 100%; height: 50px; top: -80px; position: fixed; left: 0; right: 0; border-radius: 0 0 25px 25px; font-family: 'Poppins', sans-serif; background-color: azure; box-shadow: 0 0 25px darkgrey; display: flex; justify-content: center; align-items: center; transition: 0.3s; z-index: 5;" id="success2"><p>office changed to empty succesfully.</p></div>
+            <h1 id="ieva">ieva kasparaviciute</h1>
+            <button onclick="ringing()" id="btn">ring</button>
+            <div class="status" id="status1"><p>office empty.</p></div>
+            <div class="status" id="status2"><p>office in registration.</p></div>
+            <div class="status" id="status3"><p>office occupied.</p></div>
+            <div class="status" id="status4"><p>ringing office...</p></div>
+            <div id="divas">
+            <p>enter code to occupy office.</p>
+            <form style="display: flex; justify-content: space-around; align-items: center; flex-direction: column; height: 150px;">
+            <input type="number" placeholder="enter code..." name="pin" id="myInput">
+            <button onclick="check(this.form)" type="button" id="ok">ok</button>
+            </form>
+            <div style="width: 35px; height: 35px; bottom: 22px; border-radius: 100%; opacity: 0; position: absolute; margin: 0 auto; box-shadow: 2px 0 10px darkgray; display: none; justify-content: center; transition: 0.3s; align-items: center; animation: spin 1s linear infinite;" id="load"></div>
+            </div>
+            <i class="fa-solid fa-key" style="position: fixed; top: -2px; transition: 0.3s; right: -2px; font-size: 20px; background-color: azure; width: 30px; height: 30px; border-radius: 0 0 0 15px; border: 2px solid black; border-top-color: transparent; border-right-color: transparent; display: flex; justify-content: center; align-items: center;" id="key" onclick="keyOpen()"></i>
+            <i class="fa-solid fa-xmark" style="position: fixed; top: -50px; transition: 0.3s; right: -50px; font-size: 20px; background-color: azure; width: 30px; height: 30px; border-radius: 0 0 0 15px; border: 2px solid black; display: flex; justify-content: center; align-items: center;" id="key2" onclick="keyClose()"></i>
+            <i class="fa-solid fa-right-from-bracket" style="position: fixed; top: -50px; transition: 0.3s; left: -50px; font-size: 20px; background-color: azure; width: 30px; height: 30px; border-radius: 0 0 15px 0; border: 2px solid black; display: flex; justify-content: center; align-items: center;" id="left" onclick="leave()"></i>
+        <script src="https://kit.fontawesome.com/a11707644f.js" crossorigin="anonymous"></script>
         <script>
-            function large() {
-                document.getElementById("img").style.width = "95%";
-                document.getElementById("img").style.right = "2.5%";
-                document.getElementById("img").style.height = "auto";
-                document.getElementById("img").style.top = "25%";
-                document.getElementById("img").style.boxShadow = "0 0 150px darkgrey";
-                document.getElementById("isejusi").style.opacity = "0";
-                document.getElementById("registruojasi").style.opacity = "1";
-                document.getElementById("button").style.opacity = "0";
-                setTimeout(() => {document.getElementById("img").style.width = "20px";}, 10000);
-                setTimeout(() => {document.getElementById("img").style.height = "20px";}, 10000);
-                setTimeout(() => {document.getElementById("img").style.top = "0";}, 10000);
-                setTimeout(() => {document.getElementById("img").style.border = "none";}, 10000);
-                setTimeout(() => {document.getElementById("img").style.right = "0";}, 10000);
-                setTimeout(() => {document.getElementById("img").style.boxShadow = "none";}, 10000);
-                setTimeout(() => {document.getElementById("img2").style.opacity = "1";}, 10300);
-                setTimeout(() => {document.getElementById("img").style.opacity = "0";}, 10300);
-                setTimeout(() => {document.getElementById("button").style.opacity = "1";}, 10300);
-                setTimeout(() => {document.getElementById("button").style.backgroundColor = "darkseagreen";}, 10300);
-                setTimeout(() => {document.getElementById("button").style.color = "white";}, 10300);
-                setTimeout(() => {document.getElementById("button").style.pointerEvents = "all";}, 10300);
-                setTimeout(() => {document.getElementById("yra").style.opacity = "1";}, 10300);
-                setTimeout(() => {document.getElementById("registruojasi").style.opacity = "0";}, 10300);
+            function ringing(){
+        document.getElementById("incoming").play();
+        document.getElementById("btn").style.backgroundColor = "darkgrey";
+        document.getElementById("btn").style.color = "lightgrey";
+        document.getElementById("btn").style.borderColor = "lightgrey";
+        document.getElementById("btn").style.pointerEvents = "none";
+        document.getElementById("left").style.top = "-50px";
+        document.getElementById("left").style.left = "-50px";
+        document.getElementById("status3").style.opacity = "0";
+        setTimeout(() => {   document.getElementById("status4").style.opacity = "1"; }, 300);
             }
-            function ring() {
-                document.getElementById('sound1').play();
-                document.getElementById("button").style.backgroundColor = "azure";
-                document.getElementById("button").style.pointerEvents = "none";
-                document.getElementById("button").style.color = "black";
-                document.getElementById("button").style.border = "2px solid darkgrey";
-                document.getElementById("img2").style.opacity = "0";
-                document.getElementById("ringing").style.opacity = "1";
-                document.getElementById("yra").style.opacity = "0";
-                setTimeout(() => {document.getElementById("img2").style.opacity = "1";}, 10000);
-                setTimeout(() => {document.getElementById("button").style.backgroundColor = "darkseagreen";}, 10000);
-                setTimeout(() => {document.getElementById("button").style.color = "white";}, 10000);
-                setTimeout(() => {document.getElementById("ringing").style.opacity = "0";}, 10000);
-                setTimeout(() => {document.getElementById("yra").style.opacity = "1";}, 10000);
-                setTimeout(() => {document.getElementById("button").style.border = "none";}, 10000);
-                setTimeout(() => {document.getElementById("button").style.pointerEvents = "all";}, 10000);
+        var audio = document.getElementById("sound1");
+        audio.onended = function() {
+            document.getElementById("btn").style.backgroundColor = "azure";
+            document.getElementById("btn").style.color = "black";
+            document.getElementById("btn").style.borderColor = "black";
+            document.getElementById("btn").style.pointerEvents = "all";
+            document.getElementById("left").style.top = "-2px";
+        document.getElementById("left").style.left = "-2px";
+        document.getElementById("status4").style.opacity = "0";
+        setTimeout(() => {   document.getElementById("status3").style.opacity = "1"; }, 300);
+        };
+        var audio2 = document.getElementById("incoming");
+        audio2.onended = function() {
+            setTimeout(() => {   document.getElementById("sound1").play(); }, 300);
+        };
+        function keyOpen(){
+        document.getElementById("key").style.top ="-50px";
+        document.getElementById("status1").style.opacity ="0";
+        setTimeout(() => {   document.getElementById("divas").style.top ="35%"; }, 300);
+        setTimeout(() => {   document.getElementById("divas").style.right ="4.5%"; }, 300);
+        setTimeout(() => {   document.getElementById("status2").style.opacity ="1"; }, 300);
+        document.getElementById("key").style.right ="-50px";
+        setTimeout(() => {   document.getElementById("key2").style.top = "-2px"; }, 300);
+        setTimeout(() => {   document.getElementById("key2").style.right = "-2px"; }, 300);
+        setTimeout(() => {   document.getElementById("register").play(); }, 300);
             }
-            function leave() {
-                document.getElementById('button').style.backgroundColor = "darkgrey";
-                document.getElementById("button").style.opacity = "0.1";
-                document.getElementById("button").style.pointerEvents = "none";
-                document.getElementById("img2").style.opacity = "0";
-                document.getElementById("img").style.opacity = "1";
-                document.getElementById("isejusi").style.opacity = "1";
-                document.getElementById("yra").style.opacity = "0";
+            function keyClose(){
+        document.getElementById("key2").style.top ="-50px";
+        document.getElementById("key2").style.right ="-50px";
+        document.getElementById("status2").style.opacity ="0";
+        setTimeout(() => {   document.getElementById("divas").style.top ="-350px"; }, 300);
+        setTimeout(() => {   document.getElementById("divas").style.right ="-95%"; }, 300);
+        setTimeout(() => {   document.getElementById("key").style.top = "-2px"; }, 300);
+        setTimeout(() => {   document.getElementById("key").style.right = "-2px"; }, 300);
+        setTimeout(() => {   document.getElementById("status1").style.opacity ="1"; }, 300);
+            }
+            function check(form)
+        {
+            if(form.pin.value == "7293")
+                {
+                    document.getElementById("key2").style.top ="-50px";
+                    document.getElementById("key2").style.right ="-50px";
+                    document.getElementById("myInput").style.borderColor ="darkgrey";
+                    document.getElementById("ok").style.opacity ="0";
+                    setTimeout(() => {   document.getElementById("load").style.display ="flex"; }, 250);
+                    setTimeout(() => {   document.getElementById("load").style.opacity ="1"; }, 300);
+                    setTimeout(() => {   document.getElementById("key2").style.top ="-50px"; }, 3300);
+                    setTimeout(() => {   document.getElementById("key2").style.right ="-50px"; }, 3300);
+                    setTimeout(() => {   document.getElementById("status2").style.opacity ="0"; }, 3300);
+                    setTimeout(() => {   document.getElementById("load").style.opacity ="0"; }, 3300);
+                    setTimeout(() => {   document.getElementById("load").style.display ="none"; }, 3300);
+                    setTimeout(() => {   document.getElementById("ok").style.opacity ="1"; }, 3300);
+                    setTimeout(() => {   document.getElementById("divas").style.top ="-350px"; }, 3600);
+                    setTimeout(() => {   document.getElementById("divas").style.right ="-95%"; }, 3600);
+                    setTimeout(() => {   document.getElementById("status3").style.opacity ="1"; }, 3600);
+                    setTimeout(() => {   document.getElementById("btn").style.opacity ="1"; }, 3900);
+                    setTimeout(() => {   document.getElementById("ieva").style.opacity ="1"; }, 3900);
+                    setTimeout(() => {   document.getElementById("btn").style.pointerEvents ="all"; }, 3900);
+                    setTimeout(() => {   document.getElementById("left").style.top ="-2px"; }, 3900);
+                    setTimeout(() => {   document.getElementById("left").style.left ="-2px"; }, 3900);
+                    setTimeout(() => {   form.reset(); }, 4000);
+                    setTimeout(() => {   document.getElementById("occupied").play(); }, 3900);
+                    setTimeout(() => {   document.getElementById("success").style.top = "0"; }, 3900);
+                    setTimeout(() => {   document.getElementById("img").style.opacity = "0"; }, 3900);
+                    setTimeout(() => {   document.getElementById("vid").play(); }, 4200);
+                    setTimeout(() => {   document.getElementById("vid").style.display = "block" }, 4200);
+                    setTimeout(() => {   document.getElementById("img").style.opacity = "1" }, 5200);
+                    setTimeout(() => {   document.getElementById("vid").style.display = "none" }, 5500);
+                    setTimeout(() => {   document.getElementById("vid").currentTime = "0" }, 5500);
+                    setTimeout(() => {   document.getElementById("success").style.top = "-80px"; }, 7900);
+        }
+            else{
+                document.getElementById("key2").style.top ="-50px";
+                    document.getElementById("key2").style.right ="-50px";
+                document.getElementById("myInput").style.borderColor ="darkgrey";
+                document.getElementById("ok").style.opacity ="0";
+                    setTimeout(() => {   document.getElementById("load").style.display ="flex"; }, 250);
+                    setTimeout(() => {   document.getElementById("load").style.opacity ="1"; }, 300);
+                    setTimeout(() => {   document.getElementById("key2").style.top ="-50px"; }, 3300);
+                    setTimeout(() => {   document.getElementById("key2").style.right ="-50px"; }, 3300);
+                    setTimeout(() => {   document.getElementById("status2").style.opacity ="0"; }, 3300);
+                    setTimeout(() => {   document.getElementById("load").style.opacity ="0"; }, 3300);
+                    setTimeout(() => {   document.getElementById("load").style.display ="none"; }, 3300);
+                    setTimeout(() => {   document.getElementById("ok").style.opacity ="1"; }, 3300);
+                    setTimeout(() => {   document.getElementById("myInput").style.borderColor ="red"; }, 3300);
+                    setTimeout(() => {   document.getElementById("key2").style.top ="-2px"; }, 3300);
+                    setTimeout(() => {   document.getElementById("key2").style.right ="-2px"; }, 3300);
+            }
+        }
+        var input = document.getElementById("myInput");
+        input.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    document.getElementById("ok").click();
+  }
+});
+function leave(){
+        document.getElementById("left").style.top ="-50px";
+        document.getElementById("left").style.left ="-50px";
+        document.getElementById("status3").style.opacity ="0";
+        setTimeout(() => {   document.getElementById("status1").style.opacity ="1"; }, 300);
+        document.getElementById("btn").style.opacity ="0.1";
+        document.getElementById("ieva").style.opacity ="0";
+        document.getElementById("btn").style.pointerEvents ="none";
+        document.getElementById("key").style.top ="-2px";
+        document.getElementById("key").style.right ="-2px";
+        document.getElementById("empty").play();
+        document.getElementById("success2").style.top ="0";
+        setTimeout(() => {   document.getElementById("success2").style.top ="-80px"; }, 4000);
             }
         </script>
 </body>
