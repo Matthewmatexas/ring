@@ -5,294 +5,365 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <title>moon_astec work</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <title>doorbell</title>
 </head>
-<body style="display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; background-color: azure;">
+<body>
     <style>
         *{
             user-select: none;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Open Sans', sans-serif;
+            transition: 0.2s;
         }
-        #btn{
-            width: 200px;
-            height: 400px;
-            font-family: 'Poppins', sans-serif;
-            border-radius: 25px;
-            font-size: 50px;
-            border: 5px solid black;
-            background-color: azure;
-            color: black;
-            transition: 0.3s;
-            opacity: 0.1;
-            pointer-events: none;
+        body{
+            background-color: lightgrey;
         }
-        h1{
-            font-family: 'Poppins', sans-serif;
-            position: fixed;
-            top: 120px;
-            opacity: 0;
-            transition: 0.3s;
+        #button{
+            width: 150px;
+            height: 150px;
+            border: 10px solid white;
+            border-radius: 100%;
+            position: absolute;
+            z-index: 10;
+            animation: blink 4s linear infinite;
         }
-        .status{
-            width: 200px;
-            height: 30px;
-            position: fixed;
-            border-radius: 25px;
-            bottom: 25px;
-            font-family: 'Poppins', sans-serif;
+        #camera{
+            width: 90px;
+            height: 90px;
+            background-color: rgb(50, 50, 50);
+            box-shadow: 0 0 5px black;
+            border-radius: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: 0.3s;
         }
-        #status1{
-            border: 5px solid red;
-            color: white;
-            background-color: red;
-        }
-        #status2{
-            border: 5px solid darkgrey;
-            color: white;
-            background-color: darkgrey;
-            opacity: 0;
-        }
-        #status3{
-            border: 5px solid darkseagreen;
-            color: white;
-            background-color: darkseagreen;
-            opacity: 0;
-        }
-        #status4{
-            border: 5px solid lightgrey;
-            color: lightgrey;
-            background-color: darkgrey;
-            opacity: 0;
-        }
-        img{
-            width: 100px;
-            height: 100px;
-            position: fixed;
-            top: 25px;
-            transition: 0.3s;
-            z-index: 5;
-        }
-        video{
-            width: 100px;
-            height: 100px;
-            position: fixed;
-            top: 24.5px;
-            transition: 0.3s;
-            display: none;
-            margin-left: -1.9px;
-        }
-        #divas{
-            width: 90%;
-            height: 250px;
-            text-align: center;
-            font-family: 'Poppins', sans-serif;
-            position: fixed;
-            top: -350px;
-            right: -95%;
-            background-color: azure;
-            border: 2px solid darkgrey;
-            font-size: 20px;
-            transition: 0.3s;
-            box-shadow: 0 0 25px darkgrey;
-            border-radius: 25px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            flex-direction: column;
-            color: darkgrey;
-            z-index: 10;
-        }
-        input{
-            width: 90%;
-            height: 50px;
-            text-align: center;
-            font-family: 'Poppins', sans-serif;
-            background-color: azure;
-            border: 2px solid darkgrey;
-            font-size: 25px;
-            transition: 0.3s;
-            border-radius: 25px;
-            color: darkgrey;
-        }
-        input::placeholder{
-            color: darkgrey;
-        }
-        input:focus{
-            outline: none;
-        }
-        #divas button{
-            font-size: 20px;
-            border-radius: 25px;
-            width: 150px;
-            height: 35px;
-            border: 2px solid darkgrey;
-            color: darkgrey;
-            font-family: 'Poppins', sans-serif;
-            background-color: azure;
-            transition: 0.3s;
-        }
-        @keyframes spin{
+        @keyframes rotate {
             0%{
-                transform: rotate(-360deg);
+                transform: rotate(45deg);
             }
             100%{
+                transform: rotate(405deg);
+            }
+        }
+        @keyframes blink {
+            0%{
+                border-color: white;
+            }
+            15%{
+                border-color: black;
+            }
+            30%{
+                border-color: white;
+            }
+            100%{
+                border-color: white;
             }
         }
         </style>
-            <audio id="sound1" src="audio1.wav"></audio>
-            <audio id="incoming" src="incoming-ring.mp3"></audio>
-            <audio id="occupied" src="occupied.mp3"></audio>
-            <audio id="empty" src="empty.mp3"></audio>
-            <audio id="register" src="register.mp3"></audio>
-            <img src="logo.jpg" alt="logo" id="img">
-            <video src="video.mp4" id="vid"></video>
-            <div style="width: 100%; height: 50px; top: -80px; position: fixed; left: 0; right: 0; border-radius: 0 0 25px 25px; font-family: 'Poppins', sans-serif; background-color: azure; box-shadow: 0 0 25px darkgrey; display: flex; justify-content: center; align-items: center; transition: 0.3s; z-index: 5;" id="success"><p>office changed to occupied succesfully.</p></div>
-            <div style="width: 100%; height: 50px; top: -80px; position: fixed; left: 0; right: 0; border-radius: 0 0 25px 25px; font-family: 'Poppins', sans-serif; background-color: azure; box-shadow: 0 0 25px darkgrey; display: flex; justify-content: center; align-items: center; transition: 0.3s; z-index: 5;" id="success2"><p>office changed to empty succesfully.</p></div>
-            <h1 id="ieva">ieva kasparaviciute</h1>
-            <button onclick="ringing()" id="btn">ring</button>
-            <div class="status" id="status1"><p>office empty.</p></div>
-            <div class="status" id="status2"><p>office in registration.</p></div>
-            <div class="status" id="status3"><p>office occupied.</p></div>
-            <div class="status" id="status4"><p>ringing office...</p></div>
-            <div id="divas">
-            <p>enter code to occupy office.</p>
-            <form style="display: flex; justify-content: space-around; align-items: center; flex-direction: column; height: 150px;">
-            <input type="number" placeholder="enter code..." name="pin" id="myInput">
-            <button onclick="check(this.form)" type="button" id="ok">ok</button>
-            </form>
-            <div style="width: 35px; height: 35px; bottom: 22px; border-radius: 100%; opacity: 0; position: absolute; margin: 0 auto; box-shadow: 2px 0 10px darkgray; display: none; justify-content: center; transition: 0.3s; align-items: center; animation: spin 1s linear infinite;" id="load"></div>
+        <audio id="sound1" src="audio1.wav"></audio>
+        <div style="width: 80%; height: 90%; background-color: black; position: fixed; left: 10%; right: 5%; top: 5%; border-radius: 25px;"></div>
+        <div style="width: 80%; height: 130px; display: flex; justify-content: center; align-items: center; position: fixed; left: 10%; right: 10%; top: 15%; overflow: hidden; border-top: 3px solid rgb(30, 30, 30); border-bottom: 3px solid rgb(30, 30, 30);">
+            <div style="width: 80%; height: 10px; background-color: black; position: absolute; margin-top: -115px;"></div>
+            <div style="width: 80%; height: 10px; background-color: black; position: absolute; margin-top: 115px;"></div>
+            <div style="position: absolute; z-index: -1; background-color: rgb(30, 30, 30); width: 170px; height: 170px; border-radius: 100%;"></div>
+            <div id="camera"><div style="width: 70px; height: 70px; border-radius: 100%; background-color: rgb(30, 30, 30);"></div><div style="width: 50px; height: 50px; border-radius: 100%; background-color: rgb(70, 70, 70); position: absolute;"></div><div style="width: 30px; height: 30px; border-radius: 100%; background-color: black; position: absolute;"></div></div>
+        </div>
+        <div style="width: 100%; height: 150px; display: flex; justify-content: center; align-items: center; position: fixed; left: 0; right: 0; bottom: 235px;">
+            <div id="button" onclick="ring()"></div>
+            <div style="width: 150px; height: 150px; border: 20px solid white; border-right-color: black; border-bottom-color: black; transform: rotate(45deg); border-radius: 100%; position: absolute; z-index: 10; display: none;" id="spinner"></div>
+            <div style="width: 170px; height: 170px; position: absolute; border-radius: 100%; border: 10px solid rgb(50, 50, 50); z-index: 20;" onclick="ring()" id="divas1"></div>
+            <div style="width: 130px; height: 130px; position: absolute; border-radius: 100%; background-color: rgb(50, 50, 50); z-index: 20;" onclick="ring()" id="divas2"></div>
+            <div style="background-color: rgb(15, 15, 15); width: 200px; height: 100px; position: absolute; margin-top: 350px; display: flex; justify-content: center; align-items: center; color: white; flex-direction: column;">
+                <i class="fa-regular fa-bell" style="font-size: 35px; margin-bottom: 10px; opacity: 0; position: absolute; transition: none; margin-top: -20px;" id="bell"></i>
+                <i class="fa-solid fa-bell" style="font-size: 35px; margin-bottom: 10px; opacity: 0; position: absolute; transition: none; margin-top: -20px;" id="bell2"></i>
+                <p style="font-size: 16px; opacity: 0; transition: none; position: absolute; margin-top: 40px;" id="ringing">RINGING</p>
+                <i class="fa-solid fa-xmark" style="font-size: 35px; margin-bottom: 10px; opacity: 0; position: absolute; transition: none; margin-top: -20px;" id="x"></i>
+                <p style="font-size: 16px; opacity: 0; transition: none; position: absolute; margin-top: 40px;" id="notConnected">NOT CONNECTED</p>
+                <p style="font-size: 16px; opacity: 0; transition: none; position: absolute; margin-top: 40px;" id="contactSupport">CONTACT SUPPORT: E39</p>
+                <i class="fa-solid fa-check" style="font-size: 35px; margin-bottom: 10px; opacity: 0; position: absolute; transition: none; margin-top: -20px;" id="check"></i>
+                <p style="font-size: 16px; opacity: 0; transition: none; position: absolute; margin-top: 40px;" id="connected">CONNECTED</p>
             </div>
-            <i class="fa-solid fa-key" style="position: fixed; top: -2px; transition: 0.3s; right: -2px; font-size: 20px; background-color: azure; width: 30px; height: 30px; border-radius: 0 0 0 15px; border: 2px solid black; border-top-color: transparent; border-right-color: transparent; display: flex; justify-content: center; align-items: center;" id="key" onclick="keyOpen()"></i>
-            <i class="fa-solid fa-xmark" style="position: fixed; top: -50px; transition: 0.3s; right: -50px; font-size: 20px; background-color: azure; width: 30px; height: 30px; border-radius: 0 0 0 15px; border: 2px solid black; display: flex; justify-content: center; align-items: center;" id="key2" onclick="keyClose()"></i>
-            <i class="fa-solid fa-right-from-bracket" style="position: fixed; top: -50px; transition: 0.3s; left: -50px; font-size: 20px; background-color: azure; width: 30px; height: 30px; border-radius: 0 0 15px 0; border: 2px solid black; display: flex; justify-content: center; align-items: center;" id="left" onclick="leave()"></i>
+        </div>
         <script src="https://kit.fontawesome.com/a11707644f.js" crossorigin="anonymous"></script>
         <script>
-            function ringing(){
-        document.getElementById("incoming").play();
-        document.getElementById("btn").style.backgroundColor = "darkgrey";
-        document.getElementById("btn").style.color = "lightgrey";
-        document.getElementById("btn").style.borderColor = "lightgrey";
-        document.getElementById("btn").style.pointerEvents = "none";
-        document.getElementById("left").style.top = "-50px";
-        document.getElementById("left").style.left = "-50px";
-        document.getElementById("status3").style.opacity = "0";
-        setTimeout(() => {   document.getElementById("status4").style.opacity = "1"; }, 300);
+            // setTimeout(() => {   
+            //     document.getElementById("x").style.opacity = "1";
+            //     document.getElementById("notConnected").style.opacity = "1";
+            //     document.getElementById("sound1").pause();
+            //     document.getElementById('sound1').currentTime = 0;
+            //     document.getElementById('button').style.pointerEvents = "none";
+            //     document.getElementById("divas1").style.pointerEvents = "none";
+            //     document.getElementById("divas2").style.pointerEvents = "none";
+            //     document.getElementById('button').style.display = "block";
+            //     document.getElementById('button').style.opacity = "0";
+            //     document.getElementById('spinner').style.display = "none";
+            //     document.getElementById("ringing").style.display = "none";
+            //     document.getElementById("bell").style.display = "none";
+            //     document.getElementById("bell2").style.display = "none";
+            // }, 180000);
+            // setTimeout(() => {   
+            //     document.getElementById("notConnected").style.opacity = "0";
+            //     document.getElementById("contactSupport").style.opacity = "1";
+            // }, 182000);
+            // setTimeout(() => {   
+            //     document.getElementById("notConnected").style.opacity = "1";
+            //     document.getElementById("contactSupport").style.opacity = "0";
+            // }, 184000);
+            // setTimeout(() => {   
+            //     document.getElementById("notConnected").style.opacity = "0";
+            //     document.getElementById("contactSupport").style.opacity = "1";
+            // }, 186000);
+            // setTimeout(() => {   
+            //     document.getElementById("notConnected").style.opacity = "1";
+            //     document.getElementById("contactSupport").style.opacity = "0";
+            // }, 188000);
+            // setTimeout(() => {   
+            //     document.getElementById("connected").style.opacity = "1";
+            //     document.getElementById("check").style.opacity = "1";
+            //     document.getElementById("notConnected").style.opacity = "0";
+            //     document.getElementById("x").style.opacity = "0";
+            // }, 188500);
+            // setTimeout(() => {   
+            //     document.getElementById("connected").style.opacity = "0";
+            //     document.getElementById("check").style.opacity = "0";
+            //     document.getElementById('button').style.pointerEvents = "all";
+            //     document.getElementById("divas1").style.pointerEvents = "all";
+            //     document.getElementById("divas2").style.pointerEvents = "all";
+            //     document.getElementById('button').style.opacity = "1";
+            //     document.getElementById("ringing").style.display = "block";
+            //     document.getElementById("bell").style.display = "block";
+            //     document.getElementById("bell2").style.display = "block";
+            //     document.getElementById("ringing").style.opacity = "0";
+            //     document.getElementById("bell").style.opacity = "0";
+            //     document.getElementById("bell2").style.opacity = "0";
+            // }, 190500);
+            // setTimeout(() => {   
+            //     document.getElementById("button").style.animation = "blink 4s linear infinite";
+            // }, 193500);
+            // setTimeout(() => {   
+            //     document.getElementById("x").style.opacity = "1";
+            //     document.getElementById("notConnected").style.opacity = "1";
+            //     document.getElementById("sound1").pause();
+            //     document.getElementById('sound1').currentTime = 0;
+            //     document.getElementById('button').style.pointerEvents = "none";
+            //     document.getElementById("divas1").style.pointerEvents = "none";
+            //     document.getElementById("divas2").style.pointerEvents = "none";
+            //     document.getElementById('button').style.display = "block";
+            //     document.getElementById('button').style.opacity = "0";
+            //     document.getElementById('spinner').style.display = "none";
+            //     document.getElementById("ringing").style.display = "none";
+            //     document.getElementById("bell").style.display = "none";
+            //     document.getElementById("bell2").style.display = "none";
+            // }, 360000);
+            // setTimeout(() => {   
+            //     document.getElementById("notConnected").style.opacity = "0";
+            //     document.getElementById("contactSupport").style.opacity = "1";
+            // }, 362000);
+            // setTimeout(() => {   
+            //     document.getElementById("notConnected").style.opacity = "1";
+            //     document.getElementById("contactSupport").style.opacity = "0";
+            // }, 364000);
+            // setTimeout(() => {   
+            //     document.getElementById("notConnected").style.opacity = "0";
+            //     document.getElementById("contactSupport").style.opacity = "1";
+            // }, 366000);
+            // setTimeout(() => {   
+            //     document.getElementById("notConnected").style.opacity = "1";
+            //     document.getElementById("contactSupport").style.opacity = "0";
+            // }, 368000);
+            // setTimeout(() => {   
+            //     document.getElementById("connected").style.opacity = "1";
+            //     document.getElementById("check").style.opacity = "1";
+            //     document.getElementById("notConnected").style.opacity = "0";
+            //     document.getElementById("x").style.opacity = "0";
+            // }, 368500);
+            // setTimeout(() => {   
+            //     document.getElementById("connected").style.opacity = "0";
+            //     document.getElementById("check").style.opacity = "0";
+            //     document.getElementById('button').style.pointerEvents = "all";
+            //     document.getElementById("divas1").style.pointerEvents = "all";
+            //     document.getElementById("divas2").style.pointerEvents = "all";
+            //     document.getElementById('button').style.opacity = "1";
+            //     document.getElementById("ringing").style.display = "block";
+            //     document.getElementById("bell").style.display = "block";
+            //     document.getElementById("bell2").style.display = "block";
+            //     document.getElementById("ringing").style.opacity = "0";
+            //     document.getElementById("bell").style.opacity = "0";
+            //     document.getElementById("bell2").style.opacity = "0";
+            // }, 370500);
+            // setTimeout(() => {   
+            //     document.getElementById("button").style.animation = "blink 4s linear infinite";
+            // }, 373500);
+            // setTimeout(() => {   
+            //     document.getElementById("x").style.opacity = "1";
+            //     document.getElementById("notConnected").style.opacity = "1";
+            //     document.getElementById("sound1").pause();
+            //     document.getElementById('sound1').currentTime = 0;
+            //     document.getElementById('button').style.pointerEvents = "none";
+            //     document.getElementById("divas1").style.pointerEvents = "none";
+            //     document.getElementById("divas2").style.pointerEvents = "none";
+            //     document.getElementById('button').style.display = "block";
+            //     document.getElementById('button').style.opacity = "0";
+            //     document.getElementById('spinner').style.display = "none";
+            //     document.getElementById("ringing").style.display = "none";
+            //     document.getElementById("bell").style.display = "none";
+            //     document.getElementById("bell2").style.display = "none";
+            // }, 540000);
+            // setTimeout(() => {   
+            //     document.getElementById("notConnected").style.opacity = "0";
+            //     document.getElementById("contactSupport").style.opacity = "1";
+            // }, 542000);
+            // setTimeout(() => {   
+            //     document.getElementById("notConnected").style.opacity = "1";
+            //     document.getElementById("contactSupport").style.opacity = "0";
+            // }, 544000);
+            // setTimeout(() => {   
+            //     document.getElementById("notConnected").style.opacity = "0";
+            //     document.getElementById("contactSupport").style.opacity = "1";
+            // }, 546000);
+            // setTimeout(() => {   
+            //     document.getElementById("notConnected").style.opacity = "1";
+            //     document.getElementById("contactSupport").style.opacity = "0";
+            // }, 548000);
+            // setTimeout(() => {   
+            //     document.getElementById("connected").style.opacity = "1";
+            //     document.getElementById("check").style.opacity = "1";
+            //     document.getElementById("notConnected").style.opacity = "0";
+            //     document.getElementById("x").style.opacity = "0";
+            // }, 548500);
+            // setTimeout(() => {   
+            //     document.getElementById("connected").style.opacity = "0";
+            //     document.getElementById("check").style.opacity = "0";
+            //     document.getElementById('button').style.pointerEvents = "all";
+            //     document.getElementById("divas1").style.pointerEvents = "all";
+            //     document.getElementById("divas2").style.pointerEvents = "all";
+            //     document.getElementById('button').style.opacity = "1";
+            //     document.getElementById("ringing").style.display = "block";
+            //     document.getElementById("bell").style.display = "block";
+            //     document.getElementById("bell2").style.display = "block";
+            //     document.getElementById("ringing").style.opacity = "0";
+            //     document.getElementById("bell").style.opacity = "0";
+            //     document.getElementById("bell2").style.opacity = "0";
+            // }, 550500);
+            // setTimeout(() => {   
+            //     document.getElementById("button").style.animation = "blink 4s linear infinite";
+            // }, 553500);
+
+            function ring(){
+                document.getElementById("sound1").play();
+                document.getElementById("button").style.pointerEvents = "none";
+                document.getElementById("divas1").style.pointerEvents = "none";
+                document.getElementById("divas2").style.pointerEvents = "none";
+                document.getElementById("button").style.display = "none";
+                document.getElementById("button").style.animation = "none";
+                document.getElementById("spinner").style.animation = "rotate 0.7s linear infinite";
+                document.getElementById("spinner").style.display = "block";
+                document.getElementById("ringing").style.opacity = "1";
+                document.getElementById("bell").style.opacity = "1";
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "1"; }, 300);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "0"; }, 600);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "1"; }, 900);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "0"; }, 1200);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "1"; }, 1500);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "0"; }, 1800);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "1"; }, 2100);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "0"; }, 2400);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "1"; }, 2700);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "0"; }, 3000);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "1"; }, 3300);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "0"; }, 3600);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "1"; }, 3900);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "0"; }, 4200);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "1"; }, 4500);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "0"; }, 4800);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "1"; }, 5100);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "0"; }, 5400);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "1"; }, 5700);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "0"; }, 6000);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "1"; }, 6300);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "0"; }, 6600);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "1"; }, 6900);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "0"; }, 7200);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "1"; }, 7500);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "0"; }, 7800);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "1"; }, 8100);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "0"; }, 8400);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "1"; }, 8700);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "0"; }, 9000);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "1"; }, 9300);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "0"; }, 9600);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "1"; }, 9900);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "0"; }, 10100);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "1"; }, 10400);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "0"; }, 10700);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "1"; }, 11000);
+                setTimeout(() => {   document.getElementById("bell2").style.opacity = "0"; }, 11300);
             }
-        var audio = document.getElementById("sound1");
-        audio.onended = function() {
-            document.getElementById("btn").style.backgroundColor = "azure";
-            document.getElementById("btn").style.color = "black";
-            document.getElementById("btn").style.borderColor = "black";
-            document.getElementById("btn").style.pointerEvents = "all";
-            document.getElementById("left").style.top = "-2px";
-        document.getElementById("left").style.left = "-2px";
-        document.getElementById("status4").style.opacity = "0";
-        setTimeout(() => {   document.getElementById("status3").style.opacity = "1"; }, 300);
-        };
-        var audio2 = document.getElementById("incoming");
-        audio2.onended = function() {
-            setTimeout(() => {   document.getElementById("sound1").play(); }, 300);
-        };
-        function keyOpen(){
-        document.getElementById("key").style.top ="-50px";
-        document.getElementById("status1").style.opacity ="0";
-        setTimeout(() => {   document.getElementById("divas").style.top ="35%"; }, 300);
-        setTimeout(() => {   document.getElementById("divas").style.right ="4.5%"; }, 300);
-        setTimeout(() => {   document.getElementById("status2").style.opacity ="1"; }, 300);
-        document.getElementById("key").style.right ="-50px";
-        setTimeout(() => {   document.getElementById("key2").style.top = "-2px"; }, 300);
-        setTimeout(() => {   document.getElementById("key2").style.right = "-2px"; }, 300);
-        setTimeout(() => {   document.getElementById("register").play(); }, 300);
+            var audio = document.getElementById("sound1");
+            audio.onended = function() {
+                document.getElementById("button").style.pointerEvents = "all";
+                document.getElementById("button").style.animation = "none";
+                document.getElementById("divas1").style.pointerEvents = "all";
+                document.getElementById("divas2").style.pointerEvents = "all";
+                document.getElementById("spinner").style.animation = "none";
+                document.getElementById("spinner").style.display = "none";  
+                document.getElementById("button").style.display = "block";
+                document.getElementById("ringing").style.opacity = "0";
+                document.getElementById("bell").style.opacity = "0";
+                document.getElementById("bell2").style.opacity = "0";
+                setTimeout(() => {   
+                    document.getElementById("button").style.animation = "blink 4s linear infinite";
+                }, 3000);
             }
-            function keyClose(){
-        document.getElementById("key2").style.top ="-50px";
-        document.getElementById("key2").style.right ="-50px";
-        document.getElementById("status2").style.opacity ="0";
-        setTimeout(() => {   document.getElementById("divas").style.top ="-350px"; }, 300);
-        setTimeout(() => {   document.getElementById("divas").style.right ="-95%"; }, 300);
-        setTimeout(() => {   document.getElementById("key").style.top = "-2px"; }, 300);
-        setTimeout(() => {   document.getElementById("key").style.right = "-2px"; }, 300);
-        setTimeout(() => {   document.getElementById("status1").style.opacity ="1"; }, 300);
-            }
-            function check(form)
-        {
-            if(form.pin.value == "7293")
-                {
-                    document.getElementById("key2").style.top ="-50px";
-                    document.getElementById("key2").style.right ="-50px";
-                    document.getElementById("myInput").style.borderColor ="darkgrey";
-                    document.getElementById("ok").style.opacity ="0";
-                    setTimeout(() => {   document.getElementById("load").style.display ="flex"; }, 250);
-                    setTimeout(() => {   document.getElementById("load").style.opacity ="1"; }, 300);
-                    setTimeout(() => {   document.getElementById("key2").style.top ="-50px"; }, 3300);
-                    setTimeout(() => {   document.getElementById("key2").style.right ="-50px"; }, 3300);
-                    setTimeout(() => {   document.getElementById("status2").style.opacity ="0"; }, 3300);
-                    setTimeout(() => {   document.getElementById("load").style.opacity ="0"; }, 3300);
-                    setTimeout(() => {   document.getElementById("load").style.display ="none"; }, 3300);
-                    setTimeout(() => {   document.getElementById("ok").style.opacity ="1"; }, 3300);
-                    setTimeout(() => {   document.getElementById("divas").style.top ="-350px"; }, 3600);
-                    setTimeout(() => {   document.getElementById("divas").style.right ="-95%"; }, 3600);
-                    setTimeout(() => {   document.getElementById("status3").style.opacity ="1"; }, 3600);
-                    setTimeout(() => {   document.getElementById("btn").style.opacity ="1"; }, 3900);
-                    setTimeout(() => {   document.getElementById("ieva").style.opacity ="1"; }, 3900);
-                    setTimeout(() => {   document.getElementById("btn").style.pointerEvents ="all"; }, 3900);
-                    setTimeout(() => {   document.getElementById("left").style.top ="-2px"; }, 3900);
-                    setTimeout(() => {   document.getElementById("left").style.left ="-2px"; }, 3900);
-                    setTimeout(() => {   form.reset(); }, 4000);
-                    setTimeout(() => {   document.getElementById("occupied").play(); }, 3900);
-                    setTimeout(() => {   document.getElementById("success").style.top = "0"; }, 3900);
-                    setTimeout(() => {   document.getElementById("img").style.opacity = "0"; }, 3900);
-                    setTimeout(() => {   document.getElementById("vid").play(); }, 4200);
-                    setTimeout(() => {   document.getElementById("vid").style.display = "block" }, 4200);
-                    setTimeout(() => {   document.getElementById("img").style.opacity = "1" }, 5200);
-                    setTimeout(() => {   document.getElementById("vid").style.display = "none" }, 5500);
-                    setTimeout(() => {   document.getElementById("vid").currentTime = "0" }, 5500);
-                    setTimeout(() => {   document.getElementById("success").style.top = "-80px"; }, 7900);
-        }
-            else{
-                document.getElementById("key2").style.top ="-50px";
-                    document.getElementById("key2").style.right ="-50px";
-                document.getElementById("myInput").style.borderColor ="darkgrey";
-                document.getElementById("ok").style.opacity ="0";
-                    setTimeout(() => {   document.getElementById("load").style.display ="flex"; }, 250);
-                    setTimeout(() => {   document.getElementById("load").style.opacity ="1"; }, 300);
-                    setTimeout(() => {   document.getElementById("key2").style.top ="-50px"; }, 3300);
-                    setTimeout(() => {   document.getElementById("key2").style.right ="-50px"; }, 3300);
-                    setTimeout(() => {   document.getElementById("status2").style.opacity ="0"; }, 3300);
-                    setTimeout(() => {   document.getElementById("load").style.opacity ="0"; }, 3300);
-                    setTimeout(() => {   document.getElementById("load").style.display ="none"; }, 3300);
-                    setTimeout(() => {   document.getElementById("ok").style.opacity ="1"; }, 3300);
-                    setTimeout(() => {   document.getElementById("myInput").style.borderColor ="red"; }, 3300);
-                    setTimeout(() => {   document.getElementById("key2").style.top ="-2px"; }, 3300);
-                    setTimeout(() => {   document.getElementById("key2").style.right ="-2px"; }, 3300);
-            }
-        }
-        var input = document.getElementById("myInput");
-        input.addEventListener("keypress", function(event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    document.getElementById("ok").click();
-  }
-});
-function leave(){
-        document.getElementById("left").style.top ="-50px";
-        document.getElementById("left").style.left ="-50px";
-        document.getElementById("status3").style.opacity ="0";
-        setTimeout(() => {   document.getElementById("status1").style.opacity ="1"; }, 300);
-        document.getElementById("btn").style.opacity ="0.1";
-        document.getElementById("ieva").style.opacity ="0";
-        document.getElementById("btn").style.pointerEvents ="none";
-        document.getElementById("key").style.top ="-2px";
-        document.getElementById("key").style.right ="-2px";
-        document.getElementById("empty").play();
-        document.getElementById("success2").style.top ="0";
-        setTimeout(() => {   document.getElementById("success2").style.top ="-80px"; }, 4000);
-            }
+
+            // class ClickAndHold {
+            // /** 
+            //  * 
+            //  * @param {EventTarget} target The HTML element to apply the event to
+            //  * @param {Function} callback The function to run once the target is clicked and held
+            // */
+            // constructor(target, callback) {
+            //     this.target = target;
+            //     this.callback = callback;
+            //     this.isHeld = false;
+            //     this.activeHoldTimeoutId = null;
+
+            //     ["mousedown", "touchstart"].forEach(type => {
+            //         this.target.addEventListener(type, this._onHoldStart.bind(this));
+            //     });
+
+            //     ["mouseup", "mouseleave", "mouseout", "touchend", "touchcancel"].forEach(type => {
+            //         this.target.addEventListener(type, this._onHoldEnd.bind(this));
+            //     });
+            // }
+
+            // _onHoldStart() {
+            //     this.isHeld = true;
+
+            //     this.activeHoldTimeoutId = setTimeout(() => {
+            //         if (this.isHeld) {
+            //             this.callback();
+            //         }
+            //     }, 1000)
+            // }
+
+            // _onHoldEnd() {
+            //     this.isHeld = false;
+            //     clearTimeout(this.activeHoldTimeoutId);
+            // }
+            // }
+            // const divasP = document.getElementById("divas1");
+            // const divasA = document.getElementById("divas2");
+            // new ClickAndHold(divasP, () => {
+            // document.getElementById("button").style.display = "none";
+            // })
+            // new ClickAndHold(divasA, () => {
+            // document.getElementById("button").style.display = "none";
+            // })
         </script>
 </body>
 </html>
