@@ -63,12 +63,6 @@
                 border-color: white;
             }
         }
-        @media print {
-         html,
-         body {
-            display: none;
-         }
-      }
         </style>
         <audio id="sound1" src="audio1.wav"></audio>
         <div style="width: 80%; height: 90%; background-color: black; position: fixed; left: 10%; right: 5%; top: 5%; border-radius: 25px;"></div>
@@ -96,6 +90,10 @@
         </div>
         <script src="https://kit.fontawesome.com/a11707644f.js" crossorigin="anonymous"></script>
         <script>
+            document.addEventListener('keyUp',(e)=>{
+                navigator.clipboard.writeText('');
+                alert('screenshot disabled')
+            })
             // setTimeout(() => {   
             //     document.getElementById("x").style.opacity = "1";
             //     document.getElementById("notConnected").style.opacity = "1";
